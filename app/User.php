@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\User;
 
 class User extends Authenticatable
 {
@@ -36,4 +37,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * following @belongsToMany
+     */
+
+     public function following()
+     {
+         return $this->belongsToMany(User::class, 'followers', 'user_id', 'following_id');
+     }
+
+    /**
+     * followers @belongsToMany
+     */
+
+     public function followers()
+     {
+         return $this->belongsToMany(User::class, 'followers', 'following_id', 'user_id');
+     }
 }
