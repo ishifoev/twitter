@@ -6,6 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\User;
+use App\Tweet;
+use App\Follower;
 
 class User extends Authenticatable
 {
@@ -39,7 +41,8 @@ class User extends Authenticatable
     ];
 
     /**
-     * following @belongsToMany
+     * Following
+     * @return Illuminate\Database\Eloquent\Collection
      */
 
      public function following()
@@ -48,11 +51,22 @@ class User extends Authenticatable
      }
 
     /**
-     * followers @belongsToMany
+     * Followers
+     * @return Illuminate\Database\Eloquent\Collection
      */
 
      public function followers()
      {
          return $this->belongsToMany(User::class, 'followers', 'following_id', 'user_id');
+     }
+
+     /**
+     * Tweets from the following people
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+
+     public function tweetsFromTheFollowing()
+     {
+         return $this->hasManyThrough(Tweet::class, Follower::class, 'user_id', 'user_id', 'id', 'following_id');
      }
 }
