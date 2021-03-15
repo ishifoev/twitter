@@ -5,23 +5,20 @@
   
 </template>
 <script>
-import axios from 'axios'
-import AppTweet from '../tweets/AppTweet.vue'
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  components: { AppTweet },
-    data() {
-       return {
-           tweets: []
-       }
-    },
-    methods: {
-       async getTweets() {
-          let response = await axios.get('/api/timeline')
-          this.tweets = response.data.data
-       }
-    },
-    mounted() {
-        this.getTweets()
-    }
+   computed: {
+       ...mapGetters({
+         tweets: 'timeline/tweets'
+       })
+   },
+   methods: {
+      ...mapActions({
+         getTweets: 'timeline/getTweets'
+      })
+   },
+   mounted: {
+      this.getTweets()
+   }
 }
 </script>
