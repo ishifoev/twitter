@@ -41,6 +41,14 @@ class User extends Authenticatable
     ];
 
     /**
+     * Return avatar
+     */
+    public function avatar()
+    {
+        return 'https://www.gravatar.com/avatar/' .md5($this->email) . '?d=mp';
+    }
+
+    /**
      * Following
      * @return Illuminate\Database\Eloquent\Collection
      */
