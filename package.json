@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "tailwindcss": "^2.0.3",
+        "vue-observe-visibility": "^1.0.0",
         "vuex": "^3.6.2"
     }
 }
