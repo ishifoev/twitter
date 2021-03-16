@@ -49,6 +49,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Tweets
+     * @return Illuminate\Database\Eloquent\Collection
+    */
+    public function tweets()
+    {
+        return $this->hasMany(Tweet::class);
+    }
+
+
+    /**
      * Following
      * @return Illuminate\Database\Eloquent\Collection
      */
