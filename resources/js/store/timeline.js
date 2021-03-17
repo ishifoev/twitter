@@ -5,7 +5,7 @@ export default {
     },
     getters: {
        tweets(state) {
-           return state.tweets
+           return state.tweets.sort((a,b) => b.created_at - a.created_at)
        }
     },
     mutations: {
