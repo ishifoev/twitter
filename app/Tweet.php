@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
+use App\Tweet;
 
 class Tweet extends Model
 {
@@ -19,5 +20,13 @@ class Tweet extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Return original tweet
+     */
+    public function originalTweet()
+    {
+        return $this->hasOne(Tweet::class,'id', 'original_tweet_id');
     }
 }
