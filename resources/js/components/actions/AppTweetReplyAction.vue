@@ -7,3 +7,13 @@
                       <span class="text-gray-600">0</span>
                   </a>
 </template>
+<script>
+export default {
+    props: {
+        tweet: {
+            required: true,
+            type: Object
+        }
+    }
+}
+</script>
