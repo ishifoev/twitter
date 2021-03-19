@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Tweet;
+use App\Like;
 
 class Tweet extends Model
 {
@@ -28,5 +29,13 @@ class Tweet extends Model
     public function originalTweet()
     {
         return $this->hasOne(Tweet::class,'id', 'original_tweet_id');
+    }
+    /**
+     * Return likes
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
     }
 }
