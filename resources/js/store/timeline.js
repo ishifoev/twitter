@@ -13,6 +13,14 @@ export default {
             state.tweets.push(...data.filter((tweet)=>{
                 return !state.tweets.map((t) => t.id).includes(tweet.id)
             }));
+        },
+        SET_LIKES(state, {id,count}) {
+           state.tweets = state.tweets.map((t) => {
+              if(t.id === id) {
+                  t.likes_count = count
+              }
+              return t
+           })
         }
     },
     actions: {
