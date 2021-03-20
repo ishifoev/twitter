@@ -50,6 +50,14 @@ class User extends Authenticatable
     }
 
     /**
+     * If this tweet id has been liked
+     */
+    public function hasLiked(Tweet $tweet)
+    {
+       return $this->likes->contains('tweet_id', $tweet->id);
+    }
+
+    /**
      * Tweets
      * @return Illuminate\Database\Eloquent\Collection
     */

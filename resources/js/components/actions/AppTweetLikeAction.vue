@@ -1,5 +1,5 @@
 <template>
-    <a href="#" class="flex items-center text-base">
+    <a href="#" class="flex items-center text-base" @click.prevent="likeOrUnLike">
         <svg xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 24 24" 
             width="24" 
@@ -19,7 +19,7 @@
     </a>
 </template>
 <script>
-import { mapGetters} from 'vuex'
+import { mapGetters, mapActions} from 'vuex'
 export default {
     props: {
         tweet: {
@@ -33,6 +33,19 @@ export default {
         }),
         liked() {
             return this.likes.includes(this.tweet.id)
+        }
+    },
+    methods: {
+        ...mapActions({
+           likeTweet: 'likes/likeTweet',
+           unlikeTweet: 'likes/unlikeTweet'
+        }),
+        likeOrUnLike() {
+            if(this.liked) {
+                this.unlikeTweet(this.tweet)
+                return
+            }
+            this.likeTweet(this.tweet)
         }
     }
 }
