@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use App\User;
 use App\Tweet;
 use App\Follower;
+use App\Like;
 
 class User extends Authenticatable
 {
@@ -87,4 +88,13 @@ class User extends Authenticatable
      {
          return $this->hasManyThrough(Tweet::class, Follower::class, 'user_id', 'user_id', 'id', 'following_id');
      }
+
+     /**
+     * Return likes
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }

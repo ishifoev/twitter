@@ -26,11 +26,13 @@ Vue.prototype.$user = User;
  */
 
 import timeline from './store/timeline'
+import likes from './store/likes'
 import Vue from 'vue';
 
 const store = new Vuex.Store({
     modules: {
-       timeline
+       timeline,
+       likes
     }
 })
 
