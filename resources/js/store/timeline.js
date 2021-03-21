@@ -1,3 +1,5 @@
+import axios from 'axios';
+import get from 'lodash';
 export default {
     namespaced: true,
     state: {
@@ -18,6 +20,9 @@ export default {
            state.tweets = state.tweets.map((t) => {
               if(t.id === id) {
                   t.likes_count = count
+              }
+              if(get(t.originalTweet, 'id') === id) {
+                  t.originalTweet.likes_count = count
               }
               return t
            })
