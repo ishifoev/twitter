@@ -64773,7 +64773,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           t.likes_count = count;
         }
 
-        if (lodash__WEBPACK_IMPORTED_MODULE_2___default()(t.originalTweet, 'id') === id) {
+        if (Object(lodash__WEBPACK_IMPORTED_MODULE_2__["get"])(t.originalTweet, 'id') === id) {
           t.originalTweet.likes_count = count;
         }
 
