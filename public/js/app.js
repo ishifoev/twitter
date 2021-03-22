@@ -2050,6 +2050,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2067,13 +2074,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     tweet: {
       required: true,
       type: Object
     }
-  }
+  },
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    retweets: 'retweets/retweets'
+  })), {}, {
+    retweeted: function retweeted() {
+      return this.retweets.includes(this.tweet.id);
+    }
+  })
 });
 
 /***/ }),
@@ -49592,6 +49616,9 @@ var render = function() {
               "svg",
               {
                 staticClass: "fill-current text-gray-600 w-5 mr-2",
+                class: {
+                  "text-green-600": _vm.retweeted
+                },
                 attrs: {
                   xmlns: "http://www.w3.org/2000/svg",
                   viewBox: "0 0 24 24",
@@ -49609,9 +49636,16 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c("span", { staticClass: "text-gray-600" }, [
-              _vm._v(_vm._s(_vm.tweet.retweets_count))
-            ])
+            _c(
+              "span",
+              {
+                staticClass: "text-gray-600",
+                class: {
+                  "text-green-600": _vm.retweeted
+                }
+              },
+              [_vm._v(_vm._s(_vm.tweet.retweets_count))]
+            )
           ]
         )
       ]),
@@ -63942,8 +63976,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_observe_visibility__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-observe-visibility */ "./node_modules/vue-observe-visibility/dist/vue-observe-visibility.esm.js");
 /* harmony import */ var _store_timeline__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store/timeline */ "./resources/js/store/timeline.js");
 /* harmony import */ var _store_likes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store/likes */ "./resources/js/store/likes.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _store_retweets__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store/retweets */ "./resources/js/store/retweets.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_5__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -63953,10 +63988,10 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
-vue__WEBPACK_IMPORTED_MODULE_4___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_5___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
-vue__WEBPACK_IMPORTED_MODULE_4___default.a.use(vue_observe_visibility__WEBPACK_IMPORTED_MODULE_1__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_4___default.a.prototype.$user = User;
+vue__WEBPACK_IMPORTED_MODULE_5___default.a.use(vue_observe_visibility__WEBPACK_IMPORTED_MODULE_1__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_5___default.a.prototype.$user = User;
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -63968,17 +64003,19 @@ vue__WEBPACK_IMPORTED_MODULE_4___default.a.prototype.$user = User;
 
 
 
+
 var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
   modules: {
     timeline: _store_timeline__WEBPACK_IMPORTED_MODULE_2__["default"],
-    likes: _store_likes__WEBPACK_IMPORTED_MODULE_3__["default"]
+    likes: _store_likes__WEBPACK_IMPORTED_MODULE_3__["default"],
+    retweets: _store_retweets__WEBPACK_IMPORTED_MODULE_4__["default"]
   }
 });
 
 var files = __webpack_require__("./resources/js sync recursive \\.vue$/");
 
 files.keys().map(function (key) {
-  return vue__WEBPACK_IMPORTED_MODULE_4___default.a.component(key.split('/').pop().split('.')[0], files(key)["default"]);
+  return vue__WEBPACK_IMPORTED_MODULE_5___default.a.component(key.split('/').pop().split('.')[0], files(key)["default"]);
 });
 /*Vue.component('example-component', require('./components/ExampleComponent.vue').default);*/
 
@@ -63988,7 +64025,7 @@ files.keys().map(function (key) {
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var app = new vue__WEBPACK_IMPORTED_MODULE_4___default.a({
+var app = new vue__WEBPACK_IMPORTED_MODULE_5___default.a({
   el: '#app',
   store: store
 });
@@ -65129,6 +65166,48 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 /***/ }),
 
+/***/ "./resources/js/store/retweets.js":
+/*!****************************************!*\
+  !*** ./resources/js/store/retweets.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: {
+    retweets: []
+  },
+  getters: {
+    retweets: function retweets(state) {
+      return state.retweets;
+    }
+  },
+  mutations: {
+    PUSH_RETWEETS: function PUSH_RETWEETS(state, data) {
+      var _state$retweets;
+
+      (_state$retweets = state.retweets).push.apply(_state$retweets, _toConsumableArray(data));
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/store/timeline.js":
 /*!****************************************!*\
   !*** ./resources/js/store/timeline.js ***!
@@ -65220,9 +65299,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                 commit('likes/PUSH_LIKES', response.data.meta.likes, {
                   root: true
                 });
+                commit('retweets/PUSH_RETWEETS', response.data.meta.retweets, {
+                  root: true
+                });
                 return _context.abrupt("return", response);
 
-              case 7:
+              case 8:
               case "end":
                 return _context.stop();
             }

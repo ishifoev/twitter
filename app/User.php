@@ -9,6 +9,7 @@ use App\User;
 use App\Tweet;
 use App\Follower;
 use App\Like;
+use App\Tweets\TweetType;
 
 class User extends Authenticatable
 {
@@ -104,5 +105,13 @@ class User extends Authenticatable
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+    /**
+     * Retweets
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function retweets()
+    {
+        return $this->hasMany(Tweet::class)->where('type', TweetType::RETWEET)->orWhere('type', TweetType::QUOTE);
     }
 }
