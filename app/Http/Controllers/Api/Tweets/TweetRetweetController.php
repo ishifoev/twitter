@@ -8,6 +8,7 @@ use App\Tweet;
 use App\Tweets\TweetType;
 use App\Events\Tweets\TweetWasCreated;
 use  App\Events\Tweets\TweetRetweetsWereUpdated;
+use App\Events\Tweets\TweetWasDeleted;
 
 class TweetRetweetController extends Controller
 {
@@ -24,6 +25,8 @@ class TweetRetweetController extends Controller
 
     public function destroy(Tweet $tweet, Request $request)
     {
+        broadcast(new TweetWasDeleted($tweet->retweetedTweet));
         $tweet->retweetedTweet()->where('user_id', $request->user()->id)->delete();
+        broadcast(new TweetRetweetsWereUpdated($request->user(),$tweet));
     }
 }

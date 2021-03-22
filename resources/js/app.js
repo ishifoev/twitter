@@ -66,4 +66,7 @@ Echo.channel('tweets')
         store.dispatch('retweets/syncRetweet', e.id)
        }
        store.commit('timeline/SET_RETWEETS', e)
+})
+.listen('.TweetWasDeleted', (e) => {
+    store.commit('timeline/POP_TWEET', e.id)
 });
