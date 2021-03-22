@@ -64158,6 +64158,12 @@ Echo.channel('tweets').listen('.TweetLikesWereUpdated', function (e) {
   }
 
   store.commit('timeline/SET_LIKES', e);
+}).listen('.TweetRetweetsWereUpdated', function (e) {
+  if (e.user_id === User.id) {
+    store.dispatch('retweets/syncRetweet', e.id);
+  }
+
+  store.commit('timeline/SET_RETWEETS', e);
 });
 
 /***/ }),
@@ -65402,6 +65408,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       var _state$retweets;
 
       (_state$retweets = state.retweets).push.apply(_state$retweets, _toConsumableArray(data));
+    },
+    PUSH_RETWEET: function PUSH_RETWEET(state, id) {
+      state.retweets.push(id);
+    },
+    POP_RETWEET: function POP_RETWEET(state, id) {
+      state.retweets = without(state.retweets, id);
     }
   },
   actions: {
@@ -65438,6 +65450,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           }
         }, _callee2);
       }))();
+    },
+    syncRetweet: function syncRetweet(_ref, id) {
+      var commit = _ref.commit,
+          state = _ref.state;
+
+      if (state.retweets.includes(id)) {
+        commit('POP_RETWEET', id);
+        return;
+      }
+
+      commit('PUSH_RETWEET', id);
     }
   }
 });
@@ -65515,17 +65538,32 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
         return t;
       });
+    },
+    SET_RETWEETS: function SET_RETWEETS(state, _ref2) {
+      var id = _ref2.id,
+          count = _ref2.count;
+      state.tweets = state.tweets.map(function (t) {
+        if (t.id === id) {
+          t.retweets_count = count;
+        }
+
+        if (Object(lodash__WEBPACK_IMPORTED_MODULE_2__["get"])(t.originalTweet, 'id') === id) {
+          t.originalTweet.retweets_count = count;
+        }
+
+        return t;
+      });
     }
   },
   actions: {
-    getTweets: function getTweets(_ref2, url) {
+    getTweets: function getTweets(_ref3, url) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var commit, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                commit = _ref2.commit;
+                commit = _ref3.commit;
                 _context.next = 3;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(url);
 

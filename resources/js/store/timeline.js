@@ -26,7 +26,19 @@ export default {
               }
               return t
            })
-        }
+        },
+
+        SET_RETWEETS(state, {id,count}) {
+            state.tweets = state.tweets.map((t) => {
+               if(t.id === id) {
+                   t.retweets_count = count
+               }
+               if(get(t.originalTweet, 'id') === id) {
+                   t.originalTweet.retweets_count = count
+               }
+               return t
+            })
+         }
     },
     actions: {
         async getTweets({ commit }, url) {
