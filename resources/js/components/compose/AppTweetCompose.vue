@@ -1,10 +1,10 @@
 <template>
    <form class="flex" @submit.prevent="submit">
-          <img :src="$user.avatar" class="w-12 h-12 rounded-full mr-3">
+          <img :src="$user.avatar" class="w-12 w-12 h-12 rounded-full mr-3">
      <div class="flex-grow">
       <app-tweet-compose-textarea v-model="form.body" />
-       <app-tweet-image-preview :images="media.images" v-if="media.images.length" />
-        <app-tweet-video-preview :video="media.video" v-if="media.video" />
+       <app-tweet-image-preview :images="media.images" v-if="media.images.length"  @removed="removeImage"  />
+        <app-tweet-video-preview :video="media.video" v-if="media.video" @removed="removeVideo" />
        <div class="flex justify-between">
           <ul class="flex items-center">
               <li class="mr-4">
@@ -45,6 +45,14 @@ export default {
         async submit() {
            await axios.post('/api/tweets', this.form)
            this.form.body = ''
+        },
+        removeVideo() {
+           this.media.video = null
+        },
+        removeImage(image) {
+            this.media.images = this.media.images.filter((i) => {
+                return image !== i
+            })
         },
         async getMediaTypes() {
             let response = await axios.get('/api/media/types')
