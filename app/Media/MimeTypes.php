@@ -20,4 +20,13 @@ class MimeTypes
     public static $video = [
         'video/mp4'
     ];
+
+    /**
+     * Merge video and image type
+     * @var array
+     */
+    public static function all()
+    {
+        return array_merge(self::$image, self::$video);
+    }
 }
