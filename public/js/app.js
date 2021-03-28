@@ -50881,7 +50881,9 @@ var render = function() {
       [
         _c("app-tweet-username", { attrs: { user: _vm.tweet.user } }),
         _vm._v(" "),
-        _c("p", { staticClass: "text-gray-300 whitespace-pre-wrap" }),
+        _c("p", { staticClass: "text-gray-300 whitespace-pre-wrap" }, [
+          _vm._v(_vm._s(_vm.tweet.body))
+        ]),
         _vm._v(" "),
         _vm.images.length
           ? _c(

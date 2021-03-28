@@ -4,7 +4,7 @@
         <div class="flex-grow">
             <app-tweet-username :user="tweet.user"/>
 
-             <p class="text-gray-300 whitespace-pre-wrap"></p>
+             <p class="text-gray-300 whitespace-pre-wrap">{{ tweet.body }}</p>
 
             <div class="flex flex-wrap my-4" v-if="images.length">
                 <div
