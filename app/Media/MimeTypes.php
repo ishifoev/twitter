@@ -22,6 +22,23 @@ class MimeTypes
     ];
 
     /**
+     * Return type
+     * @var array
+     */
+    public static function type($mime)
+    {
+        if (in_array($mime, self::$image)) {
+            return 'image';
+        }
+
+        if (in_array($mime, self::$video)) {
+            return 'video';
+        }
+
+        return null;
+    }
+
+    /**
      * Merge video and image type
      * @var array
      */
