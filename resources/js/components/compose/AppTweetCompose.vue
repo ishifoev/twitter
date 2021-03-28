@@ -3,6 +3,9 @@
           <img :src="$user.avatar" class="w-12 w-12 h-12 rounded-full mr-3">
      <div class="flex-grow">
       <app-tweet-compose-textarea v-model="form.body" />
+      <app-tweet-media-progress v-if="media.progress"
+                                class="mb-4"
+                                :progress="media.progress"/>
        <app-tweet-image-preview :images="media.images" v-if="media.images.length"  @removed="removeImage"  />
         <app-tweet-video-preview :video="media.video" v-if="media.video" @removed="removeVideo" />
        <div class="flex justify-between">
@@ -36,27 +39,43 @@ export default {
             },
             media: {
                 images: [],
-                video: null
+                video: null,
+                progress: 0
             },
             mediaTypes: {}
         }
     },
     methods: {
         async submit() {
-           let media = await this.uploadMedia()
+           if(this.media.images.length || this.media.video) {
+            let media = await this.uploadMedia()
            this.form.media = media.data.data.map(r => r.id)
+           }
+           
            await axios.post('/api/tweets', this.form)
+           this.resetForm()
+        
+        },
+        resetForm()
+        {
            this.form.body = ''
            this.form.media = []
            this.media.video = null
            this.media.images = []
+           this.media.progress = 0
+        },
+        handleUploadProgress(event)
+        {
+           this.media.progress = parseInt(Math.round((event.loaded / event.total) * 100))
         },
         async uploadMedia() {
            return await axios.post('/api/media',  this.buildMediaForm(),{
                headers: {
                    'Content-Type': 'multipart/form-data'
-               }
+               },
+                onUploadProgress: this.handleUploadProgress
            })
+          
         },
         buildMediaForm() {
             let form = new FormData()
