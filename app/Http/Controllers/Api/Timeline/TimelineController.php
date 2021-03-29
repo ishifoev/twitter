@@ -15,11 +15,13 @@ class TimelineController extends Controller
     public function index(Request $request)
     {
         $tweets = $request->user()
-                           ->tweetsFromTheFollowing()     
-                            ->latest()
-                            ->with([
+                           ->tweetsFromTheFollowing()  
+                           ->parent()   
+                           ->latest()
+                           ->with([
                             'media.baseMedia',
                             'retweets',
+                            'replies',
                             'user', 
                             'likes',
                             'originalTweet.retweets',

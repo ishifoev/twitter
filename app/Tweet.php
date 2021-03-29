@@ -7,6 +7,7 @@ use App\User;
 use App\Tweet;
 use App\Like;
 use App\TweetMedia;
+use Illuminate\Database\Eloquent\Builder;
 
 class Tweet extends Model
 {
@@ -16,6 +17,16 @@ class Tweet extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * Parent scope
+     * @return Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeParent(Builder $builder)
+    {
+        return $builder->whereNull('parent_id'); 
+    }
+
     /**
      * Return user
      */
@@ -62,5 +73,13 @@ class Tweet extends Model
     public function media()
     {
         return $this->hasMany(TweetMedia::class);
+    }
+     /**
+     * Replies
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function replies()
+    {
+        return $this->hasMany(Tweet::class, 'parent_id');
     }
 }

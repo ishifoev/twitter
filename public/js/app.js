@@ -49998,7 +49998,9 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("span", { staticClass: "text-gray-600" }, [_vm._v("0")])
+      _c("span", { staticClass: "text-gray-600" }, [
+        _vm._v(_vm._s(_vm.tweet.replies_count))
+      ])
     ]
   )
 }
