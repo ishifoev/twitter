@@ -80,4 +80,7 @@ Echo.channel('tweets')
 })
 .listen('.TweetWasDeleted', (e) => {
     store.commit('timeline/POP_TWEET', e.id)
+})
+.listen('.TweetRepliesWereUpdated', (e) => {
+       store.commit('timeline/SET_REPLIES', e)
 });

@@ -43,6 +43,17 @@ export default {
                }
                return t
             })
+         },
+         SET_REPLIES(state, {id,count}) {
+            state.tweets = state.tweets.map((t) => {
+               if(t.id === id) {
+                   t.replies_count = count
+               }
+               if(get(t.originalTweet, 'id') === id) {
+                   t.originalTweet.replies_count = count
+               }
+               return t
+            })
          }
     },
     actions: {

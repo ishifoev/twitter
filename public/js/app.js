@@ -65364,6 +65364,8 @@ Echo.channel('tweets').listen('.TweetLikesWereUpdated', function (e) {
   store.commit('timeline/SET_RETWEETS', e);
 }).listen('.TweetWasDeleted', function (e) {
   store.commit('timeline/POP_TWEET', e.id);
+}).listen('.TweetRepliesWereUpdated', function (e) {
+  store.commit('timeline/SET_REPLIES', e);
 });
 
 /***/ }),
@@ -67566,17 +67568,32 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
         return t;
       });
+    },
+    SET_REPLIES: function SET_REPLIES(state, _ref3) {
+      var id = _ref3.id,
+          count = _ref3.count;
+      state.tweets = state.tweets.map(function (t) {
+        if (t.id === id) {
+          t.replies_count = count;
+        }
+
+        if (Object(lodash__WEBPACK_IMPORTED_MODULE_2__["get"])(t.originalTweet, 'id') === id) {
+          t.originalTweet.replies_count = count;
+        }
+
+        return t;
+      });
     }
   },
   actions: {
-    getTweets: function getTweets(_ref3, url) {
+    getTweets: function getTweets(_ref4, url) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var commit, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                commit = _ref3.commit;
+                commit = _ref4.commit;
                 _context.next = 3;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(url);
 
@@ -67599,14 +67616,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         }, _callee);
       }))();
     },
-    quoteTweet: function quoteTweet(_, _ref4) {
+    quoteTweet: function quoteTweet(_, _ref5) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var tweet, data;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                tweet = _ref4.tweet, data = _ref4.data;
+                tweet = _ref5.tweet, data = _ref5.data;
                 console.log(data);
                 _context2.next = 4;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/tweets/".concat(tweet.id, "/quotes"), data);
@@ -67619,14 +67636,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         }, _callee2);
       }))();
     },
-    replyToTweet: function replyToTweet(_, _ref5) {
+    replyToTweet: function replyToTweet(_, _ref6) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var tweet, data;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                tweet = _ref5.tweet, data = _ref5.data;
+                tweet = _ref6.tweet, data = _ref6.data;
                 console.log(data);
                 _context3.next = 4;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/tweets/".concat(tweet.id, "/replies"), data);
