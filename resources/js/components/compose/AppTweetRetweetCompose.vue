@@ -3,7 +3,7 @@
           <img :src="$user.avatar" class="w-12 w-12 h-12 rounded-full mr-3">
      <div class="flex-grow">
       <app-tweet-compose-textarea v-model="form.body" placeholder="Add a comment" />
-     
+      
        <div class="flex justify-between">
           <ul class="flex items-center">
              
@@ -25,13 +25,27 @@
 <script>
 import axios from 'axios'
 import compose from '../../mixins/compose'
+import { mapActions } from 'vuex'
 export default {
     mixins: [
         compose
     ],
+    props: {
+        tweet: {
+            required: true,
+            type: Object
+        }
+    },
     methods: {
+        ...mapActions({
+            quoteTweet: 'timeline/quoteTweet'
+        }),
         async post() {
-           console.log('create a retweet with a comment')
+           await this.quoteTweet({
+               tweet: this.tweet,
+               data: this.form
+           })
+           this.$emit('success')
         }
     }
 }

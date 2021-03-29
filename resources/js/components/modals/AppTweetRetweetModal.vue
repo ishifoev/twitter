@@ -1,6 +1,6 @@
 <template>
     <div>
-        <app-tweet-retweet-compose />
+        <app-tweet-retweet-compose :tweet="tweet" @success="$emit('close')" />
       <component class="border border-gray-700 rounded-lg mt-4 p-4" v-if="tweet" :is="`app-tweet-variant-${tweet.type}`" :tweet="tweet" />
     </div>
 </template>
