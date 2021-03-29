@@ -9,6 +9,10 @@ use App\Events\Tweets\TweetLikesWereUpdated;
 
 class TweetLikeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth:sanctum']);
+    }
     public function store(Tweet $tweet, Request $request)
     {
        if($request->user()->hasLiked($tweet)) {
