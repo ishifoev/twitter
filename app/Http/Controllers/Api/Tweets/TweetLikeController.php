@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Tweet;
 use App\Events\Tweets\TweetLikesWereUpdated;
+use App\Notifications\Tweets\TweetLiked;
 
 class TweetLikeController extends Controller
 {
@@ -22,6 +23,11 @@ class TweetLikeController extends Controller
            'tweet_id' => $tweet->id
        ]);
 
+       //if($request->user()->id !== $tweet->user_id)
+       //{
+          $tweet->user->notify(new TweetLiked($request->user(), $tweet));
+       //}
+       
        broadcast(new TweetLikesWereUpdated($request->user(),$tweet));
     }
 
