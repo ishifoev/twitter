@@ -10,6 +10,7 @@ use App\User;
 use App\Tweet;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\TweetResource;
+use App\Notifications\Tweets\DatabaseNotificationChannel;
 
 class TweetLiked extends Notification
 {
@@ -38,7 +39,7 @@ class TweetLiked extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return [DatabaseNotificationChannel::class];
     }
 
     /**
