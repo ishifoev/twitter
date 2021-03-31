@@ -39,20 +39,22 @@ Vue.prototype.$user = User;
 import timeline from './store/timeline'
 import likes from './store/likes'
 import retweets from './store/retweets'
+import notifications from './store/notifications'
 import Vue from 'vue';
 
 const store = new Vuex.Store({
     modules: {
        timeline,
        likes,
-       retweets
+       retweets,
+       notifications
     }
 })
 
 const files = require.context('./', true, /\.vue$/i)
 files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-/*Vue.component('example-component', require('./components/ExampleComponent.vue').default);*/
+//Vue.component('app-notifications', require('./components/notifications/AppNotifications.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
