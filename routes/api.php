@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/timeline', 'Api\Timeline\TimelineController@index');
+
+Route::get('/tweets', 'Api\Tweets\TweetController@index');
 Route::post('/tweets', 'Api\Tweets\TweetController@store');
 
 Route::post('/tweets/{tweet}/replies', 'Api\Tweets\TweetReplyController@store');

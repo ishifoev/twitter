@@ -8,12 +8,29 @@ use App\Http\Requests\Tweets\TweetStoreRequest;
 use App\Events\Tweets\TweetWasCreated;
 use App\Tweets\TweetType;
 use App\TweetMedia;
+use App\Tweet;
+use App\Http\Resources\TweetCollection;
 
 class TweetController extends Controller
 {
     public function __construct()
     {
         $this->middleware(['auth:sanctum'])->only(['store']);
+    }
+    public function index(Request $request)
+    {
+        $tweets = Tweet::with([
+            'media.baseMedia',
+            'retweets',
+            'replies',
+            'user', 
+            'likes',
+            'originalTweet.retweets',
+            'originalTweet.user',
+            'originalTweet.likes',
+            'originalTweet.media.baseMedia'
+            ])->find(explode(',', $request->ids));
+        return new TweetCollection($tweets);
     }
     public function store(TweetStoreRequest $request)
     {
