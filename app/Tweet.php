@@ -29,7 +29,7 @@ class Tweet extends Model
        parent::boot();
        static::created(function(Tweet $tweet){
           $tweet->entities()->createMany(
-              (new EntityExtractor($tweet))->getHashTagEntities()
+              (new EntityExtractor($tweet))->getAllEntities()
           );
        });
     }

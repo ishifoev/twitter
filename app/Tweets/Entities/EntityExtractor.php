@@ -5,7 +5,10 @@ namespace App\Tweets\Entities;
 class EntityExtractor
 {
     protected $string;
+
     const HASH_TAG_REGEX = '/(?!\s)#([a-zA-Z]\w*)\b/';
+
+    const MENTION_REGEX = '/(?=[^\w!])@(\w+)\b/';
     /**
      * @param $string
      */
@@ -21,6 +24,25 @@ class EntityExtractor
     public function getHashTagEntities()
     {
         return $this->buildEntityCollection($this->match(self::HASH_TAG_REGEX), 'hashTag');
+    }
+
+    
+    /**
+     * Preg match Mention entities
+     * @return void
+     */
+    public function getMentionEntities()
+    {
+        return $this->buildEntityCollection($this->match(self::MENTION_REGEX), 'mention');
+    }
+
+      /**
+     * Merge Mention and Tag entities
+     * @return void
+     */
+    public function getAllEntities()
+    {
+        return array_merge($this->getHashTagEntities(), $this->getMentionEntities());
     }
 
     /**
