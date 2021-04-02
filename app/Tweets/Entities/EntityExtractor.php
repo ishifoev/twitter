@@ -2,6 +2,8 @@
 
 namespace App\Tweets\Entities;
 
+use App\Tweets\Entities\EntityType;
+
 class EntityExtractor
 {
     protected $string;
@@ -23,7 +25,7 @@ class EntityExtractor
      */
     public function getHashTagEntities()
     {
-        return $this->buildEntityCollection($this->match(self::HASH_TAG_REGEX), 'hashTag');
+        return $this->buildEntityCollection($this->match(self::HASH_TAG_REGEX), EntityType::HASHTAG);
     }
 
     
@@ -33,7 +35,7 @@ class EntityExtractor
      */
     public function getMentionEntities()
     {
-        return $this->buildEntityCollection($this->match(self::MENTION_REGEX), 'mention');
+        return $this->buildEntityCollection($this->match(self::MENTION_REGEX), EntityType::MENTION);
     }
 
       /**
