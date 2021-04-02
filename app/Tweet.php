@@ -7,6 +7,7 @@ use App\User;
 use App\Tweet;
 use App\Like;
 use App\TweetMedia;
+use App\Entity;
 use Illuminate\Database\Eloquent\Builder;
 
 class Tweet extends Model
@@ -81,5 +82,13 @@ class Tweet extends Model
     public function replies()
     {
         return $this->hasMany(Tweet::class, 'parent_id');
+    }
+    /**
+     * Entities
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function entities()
+    {
+        return $this->hasMany(Entity::class);
     }
 }
