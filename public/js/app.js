@@ -2709,13 +2709,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
-    tweet: 'conversation/tweet'
+    tweet: 'conversation/tweet',
+    parents: 'conversation/parents',
+    replies: 'conversation/replies'
   })),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])({
     getTweets: 'conversation/getTweets'
   })),
   mounted: function mounted() {
     this.getTweets("/api/tweets/".concat(this.id));
+    this.getTweets("/api/tweets/".concat(this.id, "/replies"));
   }
 });
 
@@ -51316,7 +51319,13 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", [_vm._v("\n        parent\n    ")]),
+    _c(
+      "div",
+      _vm._l(_vm.parents(_vm.id), function(t) {
+        return _c("app-tweet", { key: t.id, attrs: { tweet: t } })
+      }),
+      1
+    ),
     _vm._v(" "),
     _c(
       "div",
@@ -51329,7 +51338,13 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _c("div", [_vm._v("\n        replies\n    ")])
+    _c(
+      "div",
+      _vm._l(_vm.replies(_vm.id), function(r) {
+        return _c("app-tweet", { key: r.id, attrs: { tweet: r } })
+      }),
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -68579,6 +68594,24 @@ __webpack_require__.r(__webpack_exports__);
       return function (id) {
         return state.tweets.find(function (t) {
           return t.id == id;
+        });
+      };
+    },
+    parents: function parents(state) {
+      return function (id) {
+        return state.tweets.filter(function (t) {
+          return t.id != id && t.parent_ids.includes(parseInt(id));
+        }).sort(function (a, b) {
+          return a.created_at - b.created_at;
+        });
+      };
+    },
+    replies: function replies(state) {
+      return function (id) {
+        return state.tweets.filter(function (t) {
+          return t.parent_id == id;
+        }).sort(function (a, b) {
+          return a.created_at - b.created_at;
         });
       };
     }
