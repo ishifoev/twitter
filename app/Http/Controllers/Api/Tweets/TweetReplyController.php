@@ -9,13 +9,28 @@ use App\Tweets\TweetType;
 use App\TweetMedia;
 use App\Events\Tweets\TweetRepliesWereUpdated;
 use App\Notifications\Tweets\TweetRepliedTo;
+use App\Http\Resources\TweetCollection;
 
 class TweetReplyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth:sanctum']);
+        $this->middleware(['auth:sanctum'])->only(['store']);
     }
+
+    /**
+     * @param Tweet $tweet
+     * @return TweetCollection $tweet
+     */
+    public function show(Tweet $tweet)
+    {
+        return new TweetCollection($tweet->replies);
+    }
+
+    /**
+     * @param Tweet $tweet
+     * @param Request $request
+     */
     public function store(Tweet $tweet, Request $request)
     {
         $reply = $request->user()->tweets()->create(array_merge($request->only('body'),[
