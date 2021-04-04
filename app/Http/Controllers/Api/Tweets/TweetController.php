@@ -18,6 +18,11 @@ class TweetController extends Controller
     {
         $this->middleware(['auth:sanctum'])->only(['store']);
     }
+
+    /**
+     * @param Illuminate\Http\Request $request
+     * @return App\Http\Resources\TweetCollection
+     */
     public function index(Request $request)
     {
         $tweets = Tweet::with([
@@ -32,6 +37,14 @@ class TweetController extends Controller
             'originalTweet.media.baseMedia'
             ])->find(explode(',', $request->ids));
         return new TweetCollection($tweets);
+    }
+    /**
+     * @param App\Tweet $tweet
+     * @return TweetCollection $tweet
+     */
+    public function show(Tweet $tweet)
+    {
+        return new TweetCollection(collect([$tweet])->merge($tweet->parents()));
     }
     public function store(TweetStoreRequest $request)
     {

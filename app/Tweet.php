@@ -37,11 +37,35 @@ class Tweet extends Model
 
     /**
      * Parent scope
-     * @return Illuminate\Database\Eloquent\Builder
+     * @return void
      */
     public function scopeParent(Builder $builder)
     {
         return $builder->whereNull('parent_id'); 
+    }
+
+    /**
+     * Parent
+     * @return void
+     */
+    public function parents()
+    {
+        $base = $this;
+        $parents = [];
+
+        while($base->parentTweet) {
+           $parents [] = $base->parentTweet;
+           $base = $base->parentTweet;
+        }
+        return collect($parents);
+    }
+
+    /**
+     * Parent tweet
+     */
+    public function parentTweet()
+    {
+        return $this->belongsTo(Tweet::class, 'parent_id');
     }
 
     /**
