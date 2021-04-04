@@ -23,6 +23,7 @@ class TimelineController extends Controller
                             'retweets',
                             'replies',
                             'user', 
+                            'entities',
                             'likes',
                             'originalTweet.retweets',
                             'originalTweet.user',
