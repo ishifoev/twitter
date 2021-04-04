@@ -41,7 +41,7 @@ class TweetController extends Controller
         foreach($request->media as $id) {
            $tweet->media()->save(TweetMedia::find($id));
         }
-
+        dd($tweet->mentions->users());
         broadcast(new TweetWasCreated($tweet));
     }
 }

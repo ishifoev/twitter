@@ -10,6 +10,7 @@ use App\TweetMedia;
 use App\Entity;
 use Illuminate\Database\Eloquent\Builder;
 use App\Tweets\Entities\EntityExtractor;
+use App\Tweets\Entities\EntityType;
 
 class Tweet extends Model
 {
@@ -105,5 +106,13 @@ class Tweet extends Model
     public function entities()
     {
         return $this->hasMany(Entity::class);
+    }
+     /**
+     * Mentions
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function mentions()
+    {
+        return $this->hasMany(Entity::class)->whereType(EntityType::MENTION);
     }
 }
