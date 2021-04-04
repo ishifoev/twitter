@@ -3,9 +3,9 @@
         <img :src="tweet.user.avatar" class="w-12 h-12 mr-3 rounded-full">
         <div class="flex-grow">
             <app-tweet-username :user="tweet.user"/>
-
-             <p class="text-gray-300 whitespace-pre-wrap">{{ tweet.body }}</p>
-
+             
+            <app-tweet-body :tweet="tweet"/>
+            
             <div class="flex flex-wrap my-4" v-if="images.length">
                 <div
                     class="w-6/12 flex-grow"
