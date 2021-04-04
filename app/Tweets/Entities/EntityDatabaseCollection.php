@@ -10,7 +10,7 @@ class EntityDatabaseCollection extends Collection
      * List of the username Collection
      * @return App\User
      */
-    public function user()
+    public function users()
     {
         return User::whereIn('username', $this->pluck('body_plain'))->get();
     }
