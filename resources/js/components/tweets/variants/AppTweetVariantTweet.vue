@@ -3,7 +3,9 @@
         <img :src="tweet.user.avatar" class="w-12 h-12 mr-3 rounded-full">
         <div class="flex-grow">
             <app-tweet-username :user="tweet.user"/>
-             
+             <div v-if="tweet.replying_to" class="text-gray-600 mb-2">
+               Replying to <a href="#">@{{  tweet.replying_to  }}</a>
+             </div>
             <app-tweet-body :tweet="tweet"/>
             
             <div class="flex flex-wrap my-4" v-if="images.length">
