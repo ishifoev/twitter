@@ -1,9 +1,9 @@
 <template>
-    <a :href="`/hashtags/${body}`">{{  body }}</a>
+    <a :href="`/users/${body}`">{{  body }}</a>
 </template>
 <script>
 export default {
-      props: {
+    props: {
         body: {
             required: true,
             type: String
